@@ -1,0 +1,17 @@
+.movie-page-container 
+{
+    background-color: #161B15;
+    color: antiquewhite;
+} 
+
+.movie-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding-top: 25px;
+}
+
+.fav-btn{
+    max-width: 100px;
+}
