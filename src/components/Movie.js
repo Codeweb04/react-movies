@@ -41,6 +41,7 @@ function Movie(props) {
         const element = movie.genres[i];
         genres.push(element)
         genres.push(',')
+        console.log(genres)
       }
     return (
         <div className='movie-page-container'>
