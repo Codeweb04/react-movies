@@ -37,12 +37,6 @@ function Movie(props) {
       }
       let genres = []
       const buttonText = fav ? 'Remove from Favourites' : 'Add to favourites' 
-      for (let i = 0; i < movie.genres; i++) {
-        const element = movie.genres[i];
-        genres.push(element)
-        genres.push(',')
-        console.log(genres)
-      }
     return (
         <div className='movie-page-container'>
           <div className='movie-container'>

@@ -17,11 +17,14 @@ function Home() {
   const [search, setSearch] = useState("")
   const [page, setPage] = useState(1)
   const [genre, setGenre] = useState([])
+  const [genreItem, setGenreItem] = useState([])
 
   useEffect(() => {
     const fetch = async () => {
       await axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&page=${page}`)
         .then(res => setMovies(res.data.results))
+        .then( movies.map(movie => setGenreItem([...movie.genre_ids])))
+        .then( console.log(genreItem))
         .catch(err => console.log(err))
     }
     fetch()
@@ -47,14 +50,6 @@ function Home() {
         .then(res => setMovies(res.data.results))
         .catch(err => console.log(err))
   }
-
-  const genreItem = (id) => {
-    genre.forEach((val, i) => {
-      if (val.id === id[i]) {
-        <li>{val.name}</li>
-      }
-    })
-  }
   
   return (
     <div className="Home">
@@ -72,6 +67,7 @@ function Home() {
                     }}>
                       <img className='movie-image' src={`https://image.tmdb.org/t/p/w500/${movie.backdrop_path}`} alt={movie.original_title}/>
                       {movie.original_title}
+                      {genreItem}
                    </li>)
                 }
       </ul>
