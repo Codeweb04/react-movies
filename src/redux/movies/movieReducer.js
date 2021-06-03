@@ -1,17 +1,16 @@
-import { FAV_MOVIES } from './movieTypes'
+import { ADD_FAV, REMOVE_FAV } from "./movieActions";
 
-const initialState = {
-    favMovies: []
+function addToFavorite(state = [], action) {
+  switch (action.type) {
+    case ADD_FAV:
+      let favoriteMovies = [...state, action.movie];
+      return favoriteMovies;
+    case REMOVE_FAV:
+      favoriteMovies = state.filter((item) => item.id !== action.movie.id);
+      return favoriteMovies;
+    default:
+      return state;
+  }
 }
 
-const movieReducer = (state = initialState, action, params) => {
-    switch(action.type) {
-        case FAV_MOVIES: return {
-            ...state,
-            favMovies:  state.favMovies.push(params)
-        }
-        default: return state
-    }
-}
-
-export default movieReducer
+export default addToFavorite;

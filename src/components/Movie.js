@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios' 
-import { addToFav } from '../redux'
+import { addFav, removeFav } from '../redux'
 import { connect } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import '../styles/movie.css'
@@ -32,9 +32,16 @@ function Movie(props) {
         fetchRecommended()
       }, [movieId])
 
-      const favAdd = () => {
-        props.addToFav(movieId)
+      const addFav = () => {
+        setFav({ favorited: !this.state.favorited });
+        this.props.addToFavorite(this.props.movie);
       }
+
+      const removeFav = () => {
+        this.setState({ favorited: !this.state.favorited });
+        this.props.removeFromFavorite(this.props.movie);
+      }
+
       let genres = []
       const buttonText = fav ? 'Remove from Favourites' : 'Add to favourites' 
     return (
@@ -47,7 +54,7 @@ function Movie(props) {
             <h3>Number Of Votes: {movie.vote_count}</h3>
             <h3>Genres: {genres}</h3>
             <h3>{props.favMovies}</h3>
-            <button className='btn fav-btn' onClick={favAdd}>{buttonText}</button>
+            <button className='btn fav-btn'>{buttonText}</button>
           </div>
             <h3>Recommendations:</h3>
             <ul className='movies-list-container'>
@@ -62,19 +69,5 @@ function Movie(props) {
     )
 }
 
-const mapStateToProps = state => {
-  return {
-    favMovies: state.favMovies
-  }
-}  
 
-const mapDispatchToProps = dispatch => {
-  return {
-    addToFav: (movieId) => dispatch(addToFav(movieId))
-  }
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-  )(Movie)
+export default connect(null, { addFav, removeFav })(Movie);

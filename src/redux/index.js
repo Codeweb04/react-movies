@@ -1,1 +1,1 @@
-export { addToFav } from './movies/movieActions'
+export { addFav, removeFav } from './movies/movieActions'
