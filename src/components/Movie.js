@@ -33,13 +33,21 @@ function Movie(props) {
       }, [movieId])
 
       const addFav = () => {
-        setFav({ favorited: !this.state.favorited });
-        this.props.addToFavorite(this.props.movie);
+        setFav(!fav);
+        props.addFav(movieId);
       }
 
       const removeFav = () => {
-        this.setState({ favorited: !this.state.favorited });
-        this.props.removeFromFavorite(this.props.movie);
+        setFav(!fav);
+        props.removeFav(movieId);
+      }
+
+      const changeFavStatus = () => {
+        if(fav) {
+          removeFav()
+        } else {
+          addFav()
+        }
       }
 
       let genres = []
@@ -54,7 +62,7 @@ function Movie(props) {
             <h3>Number Of Votes: {movie.vote_count}</h3>
             <h3>Genres: {genres}</h3>
             <h3>{props.favMovies}</h3>
-            <button className='btn fav-btn'>{buttonText}</button>
+            <button className='btn fav-btn' onClick={changeFavStatus}>{buttonText}</button>
           </div>
             <h3>Recommendations:</h3>
             <ul className='movies-list-container'>

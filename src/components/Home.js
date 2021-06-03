@@ -24,14 +24,14 @@ function Home() {
       await axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&page=${page}`)
         .then(res => setMovies(res.data.results))
         .then( movies.map(movie => setGenreItem([...movie.genre_ids])))
-        .then( console.log(genreItem))
         .catch(err => console.log(err))
     }
     fetch()
 
     const genreFetch = async () => {
       await axios.get(`https://api.themoviedb.org/3/genre/movie/list?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`)
-        .then(res => setGenre(res.data.genres))
+        .then(res => setGenre(res.data))
+        .then(console.log(genre))
         .catch(err => console.log(err))
     }
     genreFetch()
@@ -49,8 +49,20 @@ function Home() {
         await axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&page=${page}`)
         .then(res => setMovies(res.data.results))
         .catch(err => console.log(err))
+        merge()
   }
+
+    const merge = (id) => {
+      const mergedObjWithSameKey = {
+        ...movies,
+        ...genre,
+      };
+
+      console.log(mergedObjWithSameKey)      
+    }
   
+
+
   return (
     <div className="Home">
       <form onSubmit={submitHandler}>
@@ -68,6 +80,7 @@ function Home() {
                       <img className='movie-image' src={`https://image.tmdb.org/t/p/w500/${movie.backdrop_path}`} alt={movie.original_title}/>
                       {movie.original_title}
                       {genreItem}
+                      
                    </li>)
                 }
       </ul>
