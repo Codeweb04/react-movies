@@ -30,12 +30,12 @@ function Home() {
 
     const genreFetch = async () => {
       await axios.get(`https://api.themoviedb.org/3/genre/movie/list?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`)
-        .then(res => setGenre(res.data))
-        .then(console.log(genre))
+        .then(res => {setGenre(res.data.genres)
+        console.log(genre)})
         .catch(err => console.log(err))
     }
     genreFetch()
-  }, [page])
+  }, [])
 
   const submitHandler = async (e) => {
     e.preventDefault()
@@ -45,23 +45,11 @@ function Home() {
     .catch(err => console.log(err))
   }
 
-  const getMovies = async (e) => {
+  const getMovies = async () => {
         await axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&page=${page}`)
         .then(res => setMovies(res.data.results))
         .catch(err => console.log(err))
-        merge()
   }
-
-    const merge = (id) => {
-      const mergedObjWithSameKey = {
-        ...movies,
-        ...genre,
-      };
-
-      console.log(mergedObjWithSameKey)      
-    }
-  
-
 
   return (
     <div className="Home">
