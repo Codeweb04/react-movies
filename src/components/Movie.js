@@ -21,22 +21,10 @@ function Movie(props) {
           await axios.get(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`)
             .then(res => setMovie(res.data))
             .catch(err => console.log(err))       
-            // props.favMovies.map(movie => {
-            //   if (movie === movieId) {
-            //     setFav(true)
-            //   } else setFav(false)
-            //   return fav
-            // })
-
-            // const favM = props.favMovies.filter(movie => movie === movieId)
-            // if (favM === []) {
-            //   return
-            // } else setFav(true)
+            
             setFav(false)
-
             props.favMovies.forEach(id => {
               if (id === movieId) {
-                console.log('matches ',id)
                 setFav(true)
               } 
             });

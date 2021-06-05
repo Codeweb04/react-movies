@@ -23,14 +23,14 @@ function Home() {
     const fetch = async () => {
       await axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&page=${page}`)
         .then(res => setMovies(res.data.results))
-        .then( movies.map(movie => setGenreItem([...movie.genre_ids])))
+        // .then( movies.map(movie => setGenreItem([...movie.genre_ids])))
         .catch(err => console.log(err))
     }
     fetch()
 
     const genreFetch = async () => {
       await axios.get(`https://api.themoviedb.org/3/genre/movie/list?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`)
-        .then(res => setGenre(res.data))
+        .then(res => console.log(res.data))
         .catch(err => console.log(err))
     }
     genreFetch()
@@ -38,8 +38,7 @@ function Home() {
 
   const submitHandler = async (e) => {
     e.preventDefault()
-    await axios.get(`
-    https://api.themoviedb.org/3/search/movie?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&query=${search}&page=1&include_adult=false`)
+    await axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&query=${search}&page=1&include_adult=false`)
     .then(res => setMovies(res.data.results)) 
     .catch(err => console.log(err))
   }
