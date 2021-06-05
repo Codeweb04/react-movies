@@ -21,13 +21,26 @@ function Movie(props) {
           await axios.get(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`)
             .then(res => setMovie(res.data))
             .catch(err => console.log(err))       
-            console.log(props.favMovies.filter(id => id === movieId))     
-            if (props.favMovies.filter(id => id === movieId) === []) {
-              setFav(false)
-            } else {
-              setFav(true)
-            }
-        }
+            // props.favMovies.map(movie => {
+            //   if (movie === movieId) {
+            //     setFav(true)
+            //   } else setFav(false)
+            //   return fav
+            // })
+
+            // const favM = props.favMovies.filter(movie => movie === movieId)
+            // if (favM === []) {
+            //   return
+            // } else setFav(true)
+            setFav(false)
+
+            props.favMovies.forEach(id => {
+              if (id === movieId) {
+                console.log('matches ',id)
+                setFav(true)
+              } 
+            });
+          }
         fetch()
 
         const fetchRecommended = async () => {
@@ -36,16 +49,20 @@ function Movie(props) {
             .catch(err => console.log(err))
         }
         fetchRecommended()
-      }, [movieId, props])
+      }, [movieId])
+
+      useEffect(() => {
+
+      })
 
       const addFav = () => {
         props.addFav(movieId);
-        // setFav(true)
+        setFav(true)
       }
 
       const removeFav = () => {
         props.removeFav(movieId);
-        // setFav(false)
+        setFav(false)
       }
 
       const changeFavStatus = () => {
@@ -62,7 +79,7 @@ function Movie(props) {
           <div className='movie-container'>
           <img src={`https://image.tmdb.org/t/p/w500/${movie.backdrop_path}`} alt={movie.original_title}/> 
             <h3>Movie Title: {movie.original_title}</h3>
-            
+            {movieId}
             <h3>Language: {movie.original_language}</h3>
             <h3>Number Of Votes: {movie.vote_count}</h3>
             {/* <h3>Genres: {genres}</h3> */}

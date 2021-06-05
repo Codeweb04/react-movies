@@ -30,12 +30,11 @@ function Home() {
 
     const genreFetch = async () => {
       await axios.get(`https://api.themoviedb.org/3/genre/movie/list?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`)
-        .then(res => {setGenre(res.data.genres)
-        console.log(genre)})
+        .then(res => setGenre(res.data))
         .catch(err => console.log(err))
     }
     genreFetch()
-  }, [])
+  }, [page])
 
   const submitHandler = async (e) => {
     e.preventDefault()
